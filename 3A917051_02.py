@@ -24,13 +24,13 @@ def get_student_info(student_id) -> dict:
 
 def add_course(student_id, course_name, course_score) -> None:
     """添加一門課程成績"""
+    assert course_name == "" or course_score == "", "=>其它例外: 課程名稱或分數不可空白."
     for student in students_data:
         if student["student_id"] == student_id:
             student["courses"].append({"name": course_name,
                                        "score": course_score})
             return
     raise ValueError(f"學號 {student_id} 找不到.")
-    assert course_name == "" or course_score == "", "=>其它例外: 課程名稱或分數不可空白."
 
 
 def calculate_average_score(student_data) -> float:
