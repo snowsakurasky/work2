@@ -11,7 +11,7 @@ def read_students_json(filename) -> dict:
 def write_students_json(data, filename) -> None:
     """將資料寫入json檔"""
     with open(filename, 'w', encoding='utf-8') as file:
-        json.dump(data, file, indent=4, ensure_ascii=False)
+        json.dumps(data, file, indent=4, ensure_ascii=False)
 
 
 def get_student_info(student_id) -> dict:
@@ -30,6 +30,7 @@ def add_course(student_id, course_name, course_score) -> None:
                                        "score": course_score})
             return
     raise ValueError(f"學號 {student_id} 找不到.")
+    assert course_name == "" or course_score == "", "=>其它例外: 課程名稱或分數不可空白."
 
 
 def calculate_average_score(student_data) -> float:
@@ -68,14 +69,11 @@ while True:
         student_id = input("請輸入學號: ")
         course_name = input("請輸入要新增課程的名稱: ")
         course_score = input("請輸入要新增課程的分數: ")
-        if course_name.strip() == "" or course_score == "":
-            print("=>其它例外: 課程名稱或分數不可空白.")
-        else:
-            try:
-                add_course(student_id, course_name, float(course_score))
-                print("=>課程已成功新增。")
-            except ValueError as e:
-                print("=>發生錯誤:", e)
+        try:
+            add_course(student_id, course_name, float(course_score))
+            print("=>課程已成功新增。")
+        except ValueError as e:
+            print("=>發生錯誤:", e)
     elif choice == "3":
         student_id = input("請輸入學號: ")
         try:
